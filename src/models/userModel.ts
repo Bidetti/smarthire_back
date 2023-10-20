@@ -5,6 +5,7 @@ export interface User extends Document {
   cpf: string;
   telefone: string;
   email: string;
+  senha: string;
   endereco: string;
   fotoURL?: string;
   idade?: number;
@@ -19,6 +20,7 @@ const UserSchema: Schema = new Schema({
   cpf: { type: String, required: true },
   telefone: { type: String, required: true },
   email: { type: String, required: true },
+  senha: { type: String, required: true },
   endereco: { type: String, required: true },
   fotoURL: { type: String },
   idade: { type: Number },

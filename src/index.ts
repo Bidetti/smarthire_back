@@ -23,11 +23,11 @@ app.use('/api', router);
 console.log("========================================================================\n");
 console.log(`Iniciando servidor...`);
 mongoose
-  .connect(process.env.MONGO_URI!)
+  .connect(process.env.MONGODB_URI!)
   .then(() => {
     console.log("Configurando ambiente...");
-    app.listen(process.env.PORT, () => {
-      console.log(`Servidor iniciado na porta ${process.env.PORT}`);
+    app.listen(port, () => {
+      console.log(`Servidor iniciado na porta ${port}`);
       console.log("\n========================================================================");
     });
   })
