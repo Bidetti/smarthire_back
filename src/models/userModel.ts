@@ -17,9 +17,9 @@ export interface User extends Document {
 
 const UserSchema: Schema = new Schema({
   nomeCompleto: { type: String, required: true },
-  cpf: { type: String, required: true },
+  cpf: { type: String, required: true, unique: true },
   telefone: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   senha: { type: String, required: true },
   endereco: { type: String, required: true },
   fotoURL: { type: String },

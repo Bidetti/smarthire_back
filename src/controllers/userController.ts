@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import UserModel from '../models/userModel';
+import bcrypt from "bcrypt";
 
 export const getUserById = async (req: Request, res: Response) => {
   const { userID } = req.params;
@@ -24,10 +25,12 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 
-export const createUser = (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
-    const user = new UserModel(req.body);
-    user.save();
+    const user = req.body;
+    user.senha = bcrypt.hashSync(user.senha, 10);
+    const newUser = new UserModel(user);
+    await newUser.save();
     return res.status(201).json(user);
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao criar o usuário' });
