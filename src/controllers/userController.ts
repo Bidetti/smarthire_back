@@ -45,7 +45,11 @@ export const createUser = async (req: Request, res: Response) => {
     user.senha = bcrypt.hashSync(user.senha, 10);
     const newUser = new UserModel(user);
     await newUser.save();
+<<<<<<< HEAD
     return res.status(201).json(user.select('-password'));
+=======
+    return res.status(201).json(user);
+>>>>>>> 1b4ce3a735e87f3f0bf1558e60417fedee97dc04
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao criar o usuário' });
   }
