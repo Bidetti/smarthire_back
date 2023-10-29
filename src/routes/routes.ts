@@ -5,9 +5,11 @@ import { authenticateUser } from '../middleware/securityMiddleware';
 
 // Auth
 
-import { conectarUsuario } from '../controllers/authController';
+import { conectarUsuario, recoverCode, verifyCode } from '../controllers/authController';
 
 router.post('/auth', conectarUsuario);
+router.post('/auth/recover', recoverCode);
+router.post('/auth/verify', verifyCode);
 
 // Avaliacao
 

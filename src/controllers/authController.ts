@@ -3,6 +3,7 @@ import UserModel from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import RecoverCodeModel from "../models/recoverModel";
+import { sendEmail } from "../email/config";
 
 export const conectarUsuario = async (req: Request, res: Response) => {
     try {
@@ -30,9 +31,20 @@ export const recoverCode = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({ error: "Usuário não encontrado" });
         }
-        const code = Math.floor(Math.random() * 10000);
+        const code = bcrypt.hashSync(Math.floor(Math.random() * 10000).toString(), 10);
         const newCode = new RecoverCodeModel({ userID: user._id, code });
         await newCode.save();
+        sendEmail({
+            to: email,
+            subject: "Recuperação de senha",
+            template: "recover",
+            context: {
+                code,
+                name: user.nomeCompleto,
+            },
+        }).catch((err) => {
+            return res.status(500).json({ error: "Erro ao enviar o email" });
+        });
         return res.status(200).json({ userID: user._id });
     } catch (error) {
         return res.status(500).json({ error: "Erro ao gerar o código" });
@@ -45,7 +57,8 @@ export const verifyCode = async (req: Request, res: Response) => {
         if (!code) {
             return res.status(404).json({ error: "Código não encontrado" });
         }
-        if (code.code !== req.body.code) {
+        const validCode = await bcrypt.compare(code.code.toString(), req.body.code.toString());
+        if (!validCode) {
             return res.status(401).json({ error: "Código inválido" });
         }
         return res.status(200).json({ message: "Código válido" });
