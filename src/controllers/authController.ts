@@ -12,7 +12,7 @@ export const conectarUsuario = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({ error: "Usuário não encontrado" });
         }
-        const senhaValida = await bcrypt.compare(senha, user.senha);
+        const senhaValida = await bcrypt.compare(senha, user.senha!);
         if (!senhaValida) {
             return res.status(401).json({ error: "Senha inválida" });
         }
@@ -31,15 +31,18 @@ export const recoverCode = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({ error: "Usuário não encontrado" });
         }
-        const code = bcrypt.hashSync(Math.floor(Math.random() * 10000).toString(), 10);
-        const newCode = new RecoverCodeModel({ userID: user._id, code });
+        const code = Math.floor(100000 + Math.random() * 900000);
+        console.log(code);
+        const codeHash = await bcrypt.hash(code.toString(), 10);
+        console.log(codeHash);
+        const newCode = new RecoverCodeModel({ userID: user._id, code: codeHash });
         await newCode.save();
         sendEmail({
             to: email,
             subject: "Recuperação de senha",
             template: "recover",
             context: {
-                code,
+                codigo: code,
                 name: user.nomeCompleto,
             },
         }).catch((err) => {
@@ -47,6 +50,7 @@ export const recoverCode = async (req: Request, res: Response) => {
         });
         return res.status(200).json({ userID: user._id });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ error: "Erro ao gerar o código" });
     }
 };
@@ -57,12 +61,33 @@ export const verifyCode = async (req: Request, res: Response) => {
         if (!code) {
             return res.status(404).json({ error: "Código não encontrado" });
         }
-        const validCode = await bcrypt.compare(code.code.toString(), req.body.code.toString());
+        const validCode = await bcrypt.compare(req.body.code.toString(), code.code.toString());
         if (!validCode) {
             return res.status(401).json({ error: "Código inválido" });
         }
-        return res.status(200).json({ message: "Código válido" });
+        const reset_token = jwt.sign({ userID: req.body.userID }, process.env.JWT_SECRET as string, { expiresIn: "5m" });
+        return res.status(200).json({ reset_token });
     } catch (error) {
         return res.status(500).json({ error: "Erro ao verificar o código" });
+    }
+}
+
+export const resetPassword = async (req: Request, res: Response) => {
+    try {
+        const { userID, senha, reset_token } = req.body;
+        const user = await UserModel.findById(userID);
+        if (!user) {
+            return res.status(404).json({ error: "Usuário não encontrado" });
+        }
+        const validToken = jwt.verify(reset_token, process.env.JWT_SECRET as string);
+        if (!validToken) {
+            return res.status(401).json({ error: "Token inválido" });
+        }
+        const senhaHash = bcrypt.hashSync(senha, 10);
+        await UserModel.findByIdAndUpdate(userID, { senha: senhaHash });
+        return res.status(200).json({ message: "Senha alterada com sucesso" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Erro ao resetar a senha" });
     }
 }

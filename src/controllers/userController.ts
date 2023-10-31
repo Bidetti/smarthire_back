@@ -45,8 +45,13 @@ export const createUser = async (req: Request, res: Response) => {
     user.senha = bcrypt.hashSync(user.senha, 10);
     const newUser = new UserModel(user);
     await newUser.save();
-    return res.status(201).json(user.select('-password'));
-  } catch (error) {
+    const userObject = newUser.toObject();
+    delete userObject.senha;
+    return res.status(201).json(userObject);
+  } catch (error: any) {
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'CPF or email already exists' });
+    }
     return res.status(500).json({ message: 'Erro ao criar o usuário' });
   }
 };

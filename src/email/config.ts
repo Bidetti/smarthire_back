@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import handlebars from "handlebars";
 import fs from "fs";
+import tls from "tls";
 
 interface EmailOptions {
   to: string;
@@ -21,12 +22,15 @@ export const sendEmail = async (options: EmailOptions) => {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST!,
       port: parseInt(process.env.SMTP_PORT!),
-      secure: false,
       auth: {
         user: process.env.SMTP_USERNAME!,
         pass: process.env.SMTP_PASSWORD!,
       },
-    });
+      tls: {
+        rejectUnauthorized: true,
+        minVersion: "TLSv1.2"
+      }
+    } as nodemailer.TransportOptions);
     console.log("Transporter created");
     // Send the email
     const info = await transporter.sendMail({
@@ -34,9 +38,9 @@ export const sendEmail = async (options: EmailOptions) => {
       to,
       subject,
       html: compiledHtml,
+    }).catch((error) => {
+      console.log(error);
     });
-    console.log(`Message sent: ${info.messageId}`);
-    return true;
   } catch (error) {
     console.log(`Error occurred. ${error}`);
     return false;

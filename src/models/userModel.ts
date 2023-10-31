@@ -5,7 +5,7 @@ export interface User extends Document {
   cpf: string;
   telefone: string;
   email: string;
-  senha: string;
+  senha?: string;
   endereco: string;
   fotoURL?: string;
   idade?: number;
