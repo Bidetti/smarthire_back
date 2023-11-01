@@ -1,12 +1,13 @@
 import winston from 'winston';
+import moment from 'moment';
 
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
     defaultMeta: { service: 'user-service' },
     transports: [
-        new winston.transports.File({ filename: './logs/error.log', level: 'error' }),
-        new winston.transports.File({ filename: './logs/combined.log'
+        new winston.transports.File({ filename: `./logs/error/${moment().format('DD-MM-YYYY')}.log`, level: 'error' }),
+        new winston.transports.File({ filename: `./logs/combined/${moment().format('DD-MM-YYYY')}.log`
         }),
     ],
 });
