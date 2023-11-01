@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import PropostaModel from '../models/propostaModel';
+import logger from '../config/logger';
 
 
 export const getPropostaById = async (req: Request, res: Response) => {
@@ -11,6 +12,7 @@ export const getPropostaById = async (req: Request, res: Response) => {
         }
         return res.status(200).json(proposta);
     } catch (error) {
+        logger.error('Erro ao buscar a proposta', error);
         return res.status(500).json({ message: 'Erro ao buscar a proposta' });
     }
 };
@@ -20,6 +22,7 @@ export const getAllPropostas = async (req: Request, res: Response) => {
         const propostas = await PropostaModel.find();
         return res.status(200).json(propostas);
     } catch (error) {
+        logger.error('Erro ao buscar as propostas', error);
         return res.status(500).json({ message: 'Erro ao buscar as propostas' });
     }
 };
@@ -33,6 +36,7 @@ export const getPropostaByUser = async (req: Request, res: Response) => {
         }
         return res.status(200).json(propostas);
     } catch (error) {
+        logger.error('Erro ao buscar a proposta', error);
         return res.status(500).json({ message: 'Erro ao buscar a proposta' });
     }
 };
@@ -43,6 +47,7 @@ export const createProposta = (req: Request, res: Response) => {
         proposta.save();
         return res.status(201).json(proposta);
     } catch (error) {
+        logger.error('Erro ao criar a proposta', error);
         return res.status(500).json({ message: 'Erro ao criar a proposta' });
     }
 };
@@ -54,6 +59,7 @@ export const updateProposta = async (req: Request, res: Response) => {
         await PropostaModel.findOneAndUpdate({ propostaID }, proposta);
         return res.status(200).json(proposta);
     } catch (error) {
+        logger.error('Erro ao atualizar a proposta', error);
         return res.status(500).json({ message: 'Erro ao atualizar a proposta' });
     }
 };
@@ -64,6 +70,7 @@ export const deleteProposta = async (req: Request, res: Response) => {
         await PropostaModel.findOneAndDelete({ propostaID });
         return res.status(200).json({ message: 'Proposta removida com sucesso' });
     } catch (error) {
+        logger.error('Erro ao remover a proposta', error);
         return res.status(500).json({ message: 'Erro ao remover a proposta' });
     }
 };

@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import RecoverCodeModel from "../models/recoverModel";
 import { sendEmail } from "../email/config";
+import logger from "../config/logger";
 
 export const conectarUsuario = async (req: Request, res: Response) => {
     try {
@@ -18,9 +19,11 @@ export const conectarUsuario = async (req: Request, res: Response) => {
         }
 
         const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET as string, { expiresIn: "2h" });
+        logger.info(`Usuário ${user._id} conectado com sucesso`);
         return res.status(200).json({ token });
     } catch (error) {
-        return res.status(500).json({ error: "Erro ao conectar o usuário" });
+        logger.error('Erro ao conectar o usuário', error);
+        return res.status(500).json({ error: 'Erro ao conectar o usuário' });
     }
 };
 
@@ -32,9 +35,7 @@ export const recoverCode = async (req: Request, res: Response) => {
             return res.status(404).json({ error: "Usuário não encontrado" });
         }
         const code = Math.floor(100000 + Math.random() * 900000);
-        console.log(code);
         const codeHash = await bcrypt.hash(code.toString(), 10);
-        console.log(codeHash);
         const newCode = new RecoverCodeModel({ userID: user._id, code: codeHash });
         await newCode.save();
         sendEmail({
@@ -46,12 +47,14 @@ export const recoverCode = async (req: Request, res: Response) => {
                 name: user.nomeCompleto,
             },
         }).catch((err) => {
+            logger.error('Erro ao enviar o email', err);
             return res.status(500).json({ error: "Erro ao enviar o email" });
         });
+        logger.info(`Código de recuperação enviado para o usuário ${user._id}`);
         return res.status(200).json({ userID: user._id });
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: "Erro ao gerar o código" });
+        logger.error('Erro ao enviar código de recuperação', error);
+        return res.status(500).json({ error: 'Erro ao enviar código de recuperação!' });
     }
 };
 
@@ -66,9 +69,12 @@ export const verifyCode = async (req: Request, res: Response) => {
             return res.status(401).json({ error: "Código inválido" });
         }
         const reset_token = jwt.sign({ userID: req.body.userID }, process.env.JWT_SECRET as string, { expiresIn: "5m" });
+        code ? await RecoverCodeModel.findByIdAndDelete(code._id) : null;
+        logger.info(`Código ${code._id} verificado com sucesso`);
         return res.status(200).json({ reset_token });
     } catch (error) {
-        return res.status(500).json({ error: "Erro ao verificar o código" });
+        logger.error('Erro ao verificar o código', error);
+        return res.status(500).json({ error: 'Erro ao verificar o código' });
     }
 }
 
@@ -77,6 +83,7 @@ export const resetPassword = async (req: Request, res: Response) => {
         const { userID, senha, reset_token } = req.body;
         const user = await UserModel.findById(userID);
         if (!user) {
+            logger.error(`Usuário ${userID} não encontrado`);
             return res.status(404).json({ error: "Usuário não encontrado" });
         }
         const validToken = jwt.verify(reset_token, process.env.JWT_SECRET as string);
@@ -85,9 +92,10 @@ export const resetPassword = async (req: Request, res: Response) => {
         }
         const senhaHash = bcrypt.hashSync(senha, 10);
         await UserModel.findByIdAndUpdate(userID, { senha: senhaHash });
+        logger.info(`Senha do usuário ${userID} alterada com sucesso`);
         return res.status(200).json({ message: "Senha alterada com sucesso" });
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: "Erro ao resetar a senha" });
+        logger.error('Erro ao resetar a senha', error);
+        return res.status(500).json({ error: "Erro ao resetar a senha!" });
     }
 }

@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import handlebars from "handlebars";
 import fs from "fs";
 import tls from "tls";
+import logger from "../config/logger";
 
 interface EmailOptions {
   to: string;
@@ -31,7 +32,6 @@ export const sendEmail = async (options: EmailOptions) => {
         minVersion: "TLSv1.2"
       }
     } as nodemailer.TransportOptions);
-    console.log("Transporter created");
     // Send the email
     const info = await transporter.sendMail({
       from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM_ADDRESS}>`,
@@ -39,10 +39,10 @@ export const sendEmail = async (options: EmailOptions) => {
       subject,
       html: compiledHtml,
     }).catch((error) => {
-      console.log(error);
+      logger.error(`Error ao enviar o email. ${error.message}`);
     });
   } catch (error) {
-    console.log(`Error occurred. ${error}`);
+    logger.error(`Error ao enviar o email.`, error);
     return false;
   }
 };

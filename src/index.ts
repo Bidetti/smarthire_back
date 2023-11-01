@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import router from './routes/routes';
+import logger from './config/logger';
 
 dotenv.config();
 
@@ -29,8 +30,9 @@ mongoose
     app.listen(port, () => {
       console.log(`Servidor iniciado na porta ${port}`);
       console.log("\n========================================================================");
+      logger.info(`Servidor iniciado na porta ${port}`);
     });
   })
   .catch((err) => {
-    console.error("MongoDB connection error:", err);
+    logger.error('Erro ao conectar ao banco de dados', err);
   });
