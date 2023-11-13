@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import router from './routes/routes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,10 +23,8 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 
-// Routes go here
-app.all('*', (req, res) => {
-  res.json({ "every thing": "is awesome" })
-})
+
+app.use('/api', router);
 
 // Connect to the database before listening
 connectDB().then(() => {
