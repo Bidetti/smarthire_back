@@ -3,15 +3,17 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
 import router from './routes/routes';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const connectDB = async () => {
   try {
-    console.log(PORT);
-    const conn = await mongoose.connect(process.env.MONGO_URI as string);
+    const conn = await mongoose.connect(process.env.MONGODB_URI as string);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
