@@ -99,3 +99,23 @@ export const resetPassword = async (req: Request, res: Response) => {
         return res.status(500).json({ error: "Erro ao resetar a senha!" });
     }
 }
+
+export const verifyJWT = async(req: Request, res: Response) => {
+    try {
+        const token = req.headers.authorization;
+        if (!token) {
+            return res.status(401).json({ error: "Token não encontrado" });
+        }
+        const [, jwtToken] = token.split("Bearer "); 
+        jwt.verify(jwtToken, process.env.JWT_SECRET as string, (err: any, decoded: any) => {
+            if (err) {
+                logger.error('Token inválido', err);
+                return res.status(401).json({ message: "Token inválido!" });
+            }
+            res.status(200).json({ jwt: true });
+        });
+    } catch (error) {
+        logger.error('Erro ao verificar o token', error);
+        return res.status(500).json({ error: "Erro ao verificar o token" });
+    }
+}

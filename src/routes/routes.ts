@@ -5,12 +5,13 @@ import { authenticateUser } from '../middleware/securityMiddleware';
 
 // Auth
 
-import { conectarUsuario, recoverCode, resetPassword, verifyCode } from '../controllers/authController';
+import { conectarUsuario, recoverCode, resetPassword, verifyCode, verifyJWT } from '../controllers/authController';
 
 router.post('/auth', conectarUsuario);
 router.post('/auth/recover', recoverCode);
 router.post('/auth/verify', verifyCode);
 router.post('/auth/resetpwd', resetPassword);
+router.post('/auth/verifyjwt', verifyJWT);
 
 // Avaliacao
 
