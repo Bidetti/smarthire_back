@@ -3,36 +3,32 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-import router from './routes/routes';
-import logger from './config/logger';
-
-dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI as string);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
-app.use(bodyParser.json());
 
-app.use('/api', router);
+// Routes go here
+app.all('*', (req, res) => {
+  res.json({ "every thing": "is awesome" })
+})
 
-console.log("========================================================================\n");
-console.log(`Iniciando servidor...`);
-mongoose
-  .connect(process.env.MONGODB_URI!)
-  .then(() => {
-    console.log("Configurando ambiente...");
-    app.listen(port, () => {
-      console.log(`Servidor iniciado na porta ${port}`);
-      console.log("\n========================================================================");
-      logger.info(`Servidor iniciado na porta ${port}`);
-    });
+// Connect to the database before listening
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("listening for requests");
   })
-  .catch((err) => {
-    logger.error('Erro ao conectar ao banco de dados', err);
-  });
+})

@@ -11,7 +11,7 @@ router.post('/auth', conectarUsuario);
 router.post('/auth/recover', recoverCode);
 router.post('/auth/verify', verifyCode);
 router.post('/auth/resetpwd', resetPassword);
-router.post('/auth/verifyjwt', verifyJWT);
+router.get('/auth/verifyjwt', verifyJWT);
 
 // Avaliacao
 
