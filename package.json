@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node src/index.js"
   },
   "author": "SmartHire",
   "license": "ISC",
