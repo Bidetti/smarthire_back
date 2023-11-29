@@ -110,7 +110,7 @@ export const verifyJWT = async(req: Request, res: Response) => {
         jwt.verify(jwtToken, process.env.JWT_SECRET as string, (err: any, decoded: any) => {
             if (err) {
                 logger.error('Token inválido', err);
-                return res.status(401).json({ message: "Token inválido!" });
+                return res.status(401).json({ error: "Token inválido!" });
             }
             res.status(200).json({ jwt: true });
         });
