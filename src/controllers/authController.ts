@@ -19,7 +19,6 @@ export const conectarUsuario = async (req: Request, res: Response) => {
         }
 
         const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET as string, { expiresIn: "2h" });
-        logger.info(`Usuário ${user._id} conectado com sucesso`);
         return res.status(200).json({ token });
     } catch (error) {
         logger.error('Erro ao conectar o usuário', error);
@@ -50,7 +49,6 @@ export const recoverCode = async (req: Request, res: Response) => {
             logger.error('Erro ao enviar o email', err);
             return res.status(500).json({ error: "Erro ao enviar o email" });
         });
-        logger.info(`Código de recuperação enviado para o usuário ${user._id}`);
         return res.status(200).json({ userID: user._id });
     } catch (error) {
         logger.error('Erro ao enviar código de recuperação', error);
@@ -70,7 +68,6 @@ export const verifyCode = async (req: Request, res: Response) => {
         }
         const reset_token = jwt.sign({ userID: req.body.userID }, process.env.JWT_SECRET as string, { expiresIn: "5m" });
         code ? await RecoverCodeModel.findByIdAndDelete(code._id) : null;
-        logger.info(`Código ${code._id} verificado com sucesso`);
         return res.status(200).json({ reset_token });
     } catch (error) {
         logger.error('Erro ao verificar o código', error);
@@ -92,7 +89,6 @@ export const resetPassword = async (req: Request, res: Response) => {
         }
         const senhaHash = bcrypt.hashSync(senha, 10);
         await UserModel.findByIdAndUpdate(userID, { senha: senhaHash });
-        logger.info(`Senha do usuário ${userID} alterada com sucesso`);
         return res.status(200).json({ message: "Senha alterada com sucesso" });
     } catch (error) {
         logger.error('Erro ao resetar a senha', error);
@@ -110,7 +106,7 @@ export const verifyJWT = async(req: Request, res: Response) => {
         jwt.verify(jwtToken, process.env.JWT_SECRET as string, (err: any, decoded: any) => {
             if (err) {
                 logger.error('Token inválido', err);
-                return res.status(401).json({ message: "Token inválido!" });
+                return res.status(401).json({ error: "Token inválido!" });
             }
             res.status(200).json({ jwt: true });
         });

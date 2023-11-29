@@ -11,7 +11,6 @@ export const getUserById = async (req: Request, res: Response) => {
       logger.error(`Usuário ${userID} não encontrado`);
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
-    logger.info(`Usuário ${userID} buscado com sucesso`);
     return res.status(200).json(user);
   } catch (error) {
     logger.error('Erro ao buscar o usuário', error);
@@ -27,7 +26,6 @@ export const getUserByEmail = async (req: Request, res: Response) => {
       logger.error(`Usuário ${email} não encontrado`);
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
-    logger.info(`Usuário ${email} buscado com sucesso`);
     return res.status(200).json(user);
   } catch (error) {
     logger.error('Erro ao buscar o usuário', error);
@@ -39,7 +37,6 @@ export const getUserByEmail = async (req: Request, res: Response) => {
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await UserModel.find().select('-password');
-    logger.info('Usuários buscados com sucesso');
     return res.status(200).json(users);
   } catch (error) {
     logger.error('Erro ao buscar os usuários', error);
@@ -56,7 +53,6 @@ export const createUser = async (req: Request, res: Response) => {
     await newUser.save();
     const userObject = newUser.toObject();
     delete userObject.senha;
-    logger.info(`Usuário ${userObject._id} criado com sucesso`);
     return res.status(201).json(userObject);
   } catch (error: any) {
     logger.error('Erro ao criar o usuário', error);
@@ -72,7 +68,6 @@ export const updateUser = (req: Request, res: Response) => {
     const { userID } = req.params;
     const user = new UserModel(req.body);
     UserModel.findOneAndUpdate({ userID }, user);
-    logger.info(`Usuário ${userID} atualizado com sucesso`);
     return res.status(200).json(user);
   } catch (error) {
     logger.error('Erro ao atualizar o usuário', error);
@@ -84,7 +79,6 @@ export const deleteUser = (req: Request, res: Response) => {
   try {
     const { userID } = req.params;
     UserModel.findOneAndDelete({ userID });
-    logger.info(`Usuário ${userID} removido com sucesso`);
     return res.status(200).json({ message: 'Usuário removido com sucesso' });
   } catch (error) {
     logger.error('Erro ao remover o usuário', error);

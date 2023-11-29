@@ -1,16 +1,23 @@
 {
-    "compilerOptions": {
-      "target": "ES2021",
-      "module": "commonjs",
-      "outDir": "./dist",
-      "rootDir": "./src",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "declaration": true
-    }
-  }
-  
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": false
+  },
+  "exclude": [
+    "**/*.test.ts",
+    "__tests__"
+  ],
+  "include": [
+    "src/**/*",
+    "templates/**/*"
+  ]
+}
