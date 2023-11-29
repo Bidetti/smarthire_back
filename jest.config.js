@@ -9,5 +9,6 @@ module.exports = {
       '^@/routes/(.*)$': '<rootDir>/src/routes/$1',
     },
     testMatch: ['**/__tests__/**/*.test.ts'],
+    coverageDirectory: 'docs',
   };
   
