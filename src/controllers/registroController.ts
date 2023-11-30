@@ -8,12 +8,12 @@ export const getRegistroById = async (req: Request, res: Response) => {
         const registro = await RegistroModel.findOne({ registroID });
         if (!registro) {
             logger.error(`Registro ${registroID} não encontrado`);
-            return res.status(404).json({ message: "Registro não encontrado" });
+            return res.status(404).json({ error: "Registro não encontrado" });
         }
         return res.status(200).json(registro);
     } catch (error) {
         logger.error('Erro ao buscar o registro', error);
-        return res.status(500).json({ message: "Erro ao buscar o registro" });
+        return res.status(500).json({ error: "Erro ao buscar o registro" });
     }
 };
 
@@ -23,7 +23,7 @@ export const getAllRegistros = async (req: Request, res: Response) => {
         return res.status(200).json(registros);
     } catch (error) {
         logger.error('Erro ao buscar os registros', error);
-        return res.status(500).json({ message: "Erro ao buscar os registros" });
+        return res.status(500).json({ error: "Erro ao buscar os registros" });
     }
 };
 
@@ -33,12 +33,12 @@ export const getRegistroByServico = async (req: Request, res: Response) => {
         const registros = await RegistroModel.find({ servicoID });
         if (!registros) {
             logger.error(`Registro ${servicoID} não encontrado`);
-            return res.status(404).json({ message: "Registro não encontrado" });
+            return res.status(404).json({ error: "Registro não encontrado" });
         }
         return res.status(200).json(registros);
     } catch (error) {
         logger.error('Erro ao buscar o registro', error);
-        return res.status(500).json({ message: "Erro ao buscar o registro" });
+        return res.status(500).json({ error: "Erro ao buscar o registro" });
     }
 }
 
@@ -49,7 +49,7 @@ export const createRegistro = (req: Request, res: Response) => {
         return res.status(201).json(registro);
     } catch (error) {
         logger.error('Erro ao criar o registro', error);
-        return res.status(500).json({ message: "Erro ao criar o registro" });
+        return res.status(500).json({ meserrorsage: "Erro ao criar o registro" });
     }
 };
 
@@ -61,7 +61,7 @@ export const updateRegistro = async (req: Request, res: Response) => {
         return res.status(200).json(registro);
     } catch (error) {
         logger.error('Erro ao atualizar o registro', error);
-        return res.status(500).json({ message: "Erro ao atualizar o registro" });
+        return res.status(500).json({ error: "Erro ao atualizar o registro" });
     }
 };
 
@@ -72,6 +72,6 @@ export const deleteRegistro = async (req: Request, res: Response) => {
         return res.status(200).json({ message: "Registro removido com sucesso" });
     } catch (error) {
         logger.error('Erro ao remover o registro', error);
-        return res.status(500).json({ message: "Erro ao remover o registro" });
+        return res.status(500).json({ error: "Erro ao remover o registro" });
     }
 };
