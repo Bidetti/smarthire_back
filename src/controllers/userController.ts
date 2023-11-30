@@ -6,7 +6,7 @@ import logger from '../config/logger';
 export const getUserById = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
-    const user = await UserModel.findById({ userID }).select('-password');
+    const user = await UserModel.findById(userID).select('-password');
     if (!user) {
       logger.error(`Usuário ${userID} não encontrado`);
       return res.status(404).json({ message: 'Usuário não encontrado' });
