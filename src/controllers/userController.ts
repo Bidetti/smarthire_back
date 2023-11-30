@@ -6,7 +6,7 @@ import logger from '../config/logger';
 export const getUserById = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
-    const user = await UserModel.findById(userID).select('-password');
+    const user = await UserModel.findById(userID).select('-senha');
     if (!user) {
       logger.error(`Usuário ${userID} não encontrado`);
       return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -21,7 +21,7 @@ export const getUserById = async (req: Request, res: Response) => {
 export const getUserByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
   try {
-    const user = await UserModel.findOne({ email: email }).select('-password');
+    const user = await UserModel.findOne({ email: email }).select('-senha');
     if (!user) {
       logger.error(`Usuário ${email} não encontrado`);
       return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -36,7 +36,7 @@ export const getUserByEmail = async (req: Request, res: Response) => {
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await UserModel.find().select('-password');
+    const users = await UserModel.find().select('-senha');
     return res.status(200).json(users);
   } catch (error) {
     logger.error('Erro ao buscar os usuários', error);
