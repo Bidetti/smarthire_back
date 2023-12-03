@@ -138,34 +138,10 @@
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -179,7 +155,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -190,7 +190,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -202,7 +202,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -220,12 +220,12 @@ export const getAvaliacaoById = <span class="fstat-no" title="function not cover
 <span class="cstat-no" title="statement not covered" >    try {</span>
         const avaliacao = <span class="cstat-no" title="statement not covered" >await AvaliacaoModel.findOne({ avaliacaoID });</span>
 <span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (!avaliacao) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(404).json({ message: "Avaliação não encontrada" });</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(404).json({ error: "Avaliação não encontrada" });</span>
         }
 <span class="cstat-no" title="statement not covered" >        return res.status(200).json(avaliacao);</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        logger.error('Erro ao buscar a avaliação', error);</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ message: "Erro ao buscar a avaliação" });</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ error: "Erro ao buscar a avaliação" });</span>
     }
     };
 &nbsp;
@@ -235,7 +235,7 @@ export const getAllAvaliacoes = <span class="fstat-no" title="function not cover
 <span class="cstat-no" title="statement not covered" >        return res.status(200).json(avaliacoes);</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        logger.error('Erro ao buscar as avaliações', error);</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ message: "Erro ao buscar as avaliações" });</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ error: "Erro ao buscar as avaliações" });</span>
     }
 };
 &nbsp;
@@ -244,12 +244,12 @@ export const getAvaliacaoByUser = <span class="fstat-no" title="function not cov
 <span class="cstat-no" title="statement not covered" >    try {</span>
         const avaliacoes = <span class="cstat-no" title="statement not covered" >await AvaliacaoModel.find({ userID });</span>
 <span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (!avaliacoes) {</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(404).json({ message: "Avaliação não encontrada" });</span>
+<span class="cstat-no" title="statement not covered" >            return res.status(404).json({ error: "Avaliação não encontrada" });</span>
         }
 <span class="cstat-no" title="statement not covered" >        return res.status(200).json(avaliacoes);</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        logger.error('Erro ao buscar a avaliação', error);</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ message: "Erro ao buscar a avaliação" });</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ error: "Erro ao buscar a avaliação" });</span>
     }
 };
 &nbsp;
@@ -260,7 +260,7 @@ export const createAvaliacao = <span class="fstat-no" title="function not covere
 <span class="cstat-no" title="statement not covered" >        return res.status(201).json(avaliacao);</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        logger.error('Erro ao criar a avaliação', error);</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ message: "Erro ao criar a avaliação" });</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ error: "Erro ao criar a avaliação" });</span>
     }
 };
 &nbsp;
@@ -272,7 +272,7 @@ export const updateAvaliacao = <span class="fstat-no" title="function not covere
 <span class="cstat-no" title="statement not covered" >        return res.status(200).json(avaliacao);</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        logger.error('Erro ao atualizar a avaliação', error);</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ message: "Erro ao atualizar a avaliação" });</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ error: "Erro ao atualizar a avaliação" });</span>
     }
 };
 &nbsp;
@@ -283,7 +283,7 @@ export const deleteAvaliacao = <span class="fstat-no" title="function not covere
 <span class="cstat-no" title="statement not covered" >        return res.status(200).json({ message: "Avaliação removida com sucesso" });</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        logger.error('Erro ao remover a avaliação', error);</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ message: "Erro ao remover a avaliação" });</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ error: "Erro ao remover a avaliação" });</span>
     }
 };</pre></td></tr></table></pre>
 
@@ -292,7 +292,7 @@ export const deleteAvaliacao = <span class="fstat-no" title="function not covere
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-29T22:25:47.356Z
+                at 2023-12-03T21:23:57.249Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
