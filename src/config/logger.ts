@@ -7,8 +7,6 @@ const logger = winston.createLogger({
     defaultMeta: { service: 'user-service' },
     transports: [
         new winston.transports.File({ filename: `./logs/error/${moment().format('DD-MM-YYYY')}.log`, level: 'error' }),
-        new winston.transports.File({ filename: `./logs/combined/${moment().format('DD-MM-YYYY')}.log`
-        }),
     ],
 });
 

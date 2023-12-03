@@ -71,8 +71,8 @@ router.delete('/servico/:servicoID', authenticateUser, deleteServico);
 
 import { createUser, deleteUser, getAllUsers, getUserByEmail, getUserById, updateUser } from '../controllers/userController';
 
-router.get('/user/:userID', getUserById);
-router.get('/user/:email', getUserByEmail);
+router.get('/user/id/:userID', getUserById);
+router.get('/user/email/:email', getUserByEmail);
 router.get('/user', getAllUsers);
 router.post('/user', createUser);
 router.put('/user/:userID', authenticateUser, updateUser);

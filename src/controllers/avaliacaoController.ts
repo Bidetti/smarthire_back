@@ -7,12 +7,12 @@ export const getAvaliacaoById = async (req: Request, res: Response) => {
     try {
         const avaliacao = await AvaliacaoModel.findOne({ avaliacaoID });
         if (!avaliacao) {
-        return res.status(404).json({ message: "Avaliação não encontrada" });
+        return res.status(404).json({ error: "Avaliação não encontrada" });
         }
         return res.status(200).json(avaliacao);
     } catch (error) {
         logger.error('Erro ao buscar a avaliação', error);
-        return res.status(500).json({ message: "Erro ao buscar a avaliação" });
+        return res.status(500).json({ error: "Erro ao buscar a avaliação" });
     }
     };
 
@@ -22,7 +22,7 @@ export const getAllAvaliacoes = async (req: Request, res: Response) => {
         return res.status(200).json(avaliacoes);
     } catch (error) {
         logger.error('Erro ao buscar as avaliações', error);
-        return res.status(500).json({ message: "Erro ao buscar as avaliações" });
+        return res.status(500).json({ error: "Erro ao buscar as avaliações" });
     }
 };
 
@@ -31,12 +31,12 @@ export const getAvaliacaoByUser = async (req: Request, res: Response) => {
     try {
         const avaliacoes = await AvaliacaoModel.find({ userID });
         if (!avaliacoes) {
-            return res.status(404).json({ message: "Avaliação não encontrada" });
+            return res.status(404).json({ error: "Avaliação não encontrada" });
         }
         return res.status(200).json(avaliacoes);
     } catch (error) {
         logger.error('Erro ao buscar a avaliação', error);
-        return res.status(500).json({ message: "Erro ao buscar a avaliação" });
+        return res.status(500).json({ error: "Erro ao buscar a avaliação" });
     }
 };
 
@@ -47,7 +47,7 @@ export const createAvaliacao = (req: Request, res: Response) => {
         return res.status(201).json(avaliacao);
     } catch (error) {
         logger.error('Erro ao criar a avaliação', error);
-        return res.status(500).json({ message: "Erro ao criar a avaliação" });
+        return res.status(500).json({ error: "Erro ao criar a avaliação" });
     }
 };
 
@@ -59,7 +59,7 @@ export const updateAvaliacao = async (req: Request, res: Response) => {
         return res.status(200).json(avaliacao);
     } catch (error) {
         logger.error('Erro ao atualizar a avaliação', error);
-        return res.status(500).json({ message: "Erro ao atualizar a avaliação" });
+        return res.status(500).json({ error: "Erro ao atualizar a avaliação" });
     }
 };
 
@@ -70,6 +70,6 @@ export const deleteAvaliacao = async (req: Request, res: Response) => {
         return res.status(200).json({ message: "Avaliação removida com sucesso" });
     } catch (error) {
         logger.error('Erro ao remover a avaliação', error);
-        return res.status(500).json({ message: "Erro ao remover a avaliação" });
+        return res.status(500).json({ error: "Erro ao remover a avaliação" });
     }
 };

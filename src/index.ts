@@ -15,7 +15,6 @@ mongoose.connect(process.env.MONGODB_URI!)
     app.listen(port, () => {
       console.log(`Servidor iniciado na porta ${port}`);
       console.log("\n========================================================================");
-      logger.info(`Servidor iniciado na porta ${port}`);
     });
   })
   .catch((err) => {
